@@ -1,0 +1,29 @@
+
+@if(contributedNode) {
+    <div class="inline-component">
+        <ur-dialog-number-input
+            [clearable]="true"
+            [disabled]="false"
+            label="Tell me Wait Time"
+            keyboardLayout="numeric-free-positive"
+            [max]="15"
+            [min]="0.1"
+            [step]="0.1"
+            placeholder= "1.1"
+            [required]="false"
+            [suffix]="'s'"
+            (valueChanged)="this.contributedNode.parameters.waitTime = $event; this.saveNode()"
+            [value]="this.contributedNode.parameters.waitTime"
+        ></ur-dialog-number-input>
+        <ur-dialog-input
+            [type]="'text'"
+            [disabled]="false"
+            [label]="'Header'"
+            [placeholder]="'请输入大写字母开头的文本'"
+            [validation]="{required: true, minLength: 1, maxLength: 6}"
+            [validators]="[checkInputDialogTextValidator]"
+            [value]="this.contributedNode.parameters.header"
+            (valueChanged)="this.contributedNode.parameters.header = $event.toString(); this.saveNode()"
+        ></ur-dialog-input>
+    </div>
+}

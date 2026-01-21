@@ -1,0 +1,39 @@
+{
+        "application": {
+          "nodes": {
+            "funh-new-urcap-my-app": {
+              "title": "My App",
+              "supportiveText": "My App - Supportive Text"
+              }
+        }
+    },
+        "program": {
+          "tree": {
+            "nodes": {
+              "funh-new-urcap-my-pg": "My Pg"
+          }
+        }
+      },
+        "program-node-labels": {
+            "my-pg": {
+                "nodeTitle": "Node Title",
+                "subTitle": "Sub Title - {{ dynamicValue }}"
+            }
+        },
+        "smart-skills": {
+          "funh-new-urcap-my-sk": {
+            "title": "My Sk"
+            }
+    },
+        "sidebar-items": {
+          "funh-new-urcap-my-bar": {
+            "title": "My Bar"
+            }
+    },
+        "operator-screen": {
+          "funh-new-urcap-my-os": {
+            "title": "My Os"
+            }
+        
+    }
+}

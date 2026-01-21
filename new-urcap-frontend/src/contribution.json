@@ -1,0 +1,44 @@
+{
+  "applicationNodes": [ 
+    {
+      "translationPath": "assets/i18n/",
+      "behaviorURI": "my-app.worker.js",
+      "presenterURI": "main.js",
+      "componentTagName": "funh-new-urcap-my-app"
+    }
+    ],
+  "programNodes": [ 
+    {
+      "excludeFromToolbox": false,
+      "translationPath": "assets/i18n/",
+      "iconURI": "assets/icons/new-urcap.svg",
+      "behaviorURI": "my-pg.worker.js",
+      "presenterURI": "main.js",
+      "componentTagName": "funh-new-urcap-my-pg"
+    }],
+  "smartSkills": [ 
+    {
+      "name": "funh-new-urcap-my-sk",
+      "iconURI": "assets/icons/new-urcap.svg",
+      "presenterURI": "main.js",
+      "componentTagName": "funh-new-urcap-my-sk",
+      "behaviorURI": "my-sk.worker.js",
+      "translationPath": "assets/i18n/"
+    }],
+  "sidebarItems": [ 
+    {
+      "name": "funh-new-urcap-my-bar",
+      "iconURI": "assets/icons/new-urcap.svg",
+      "presenterURI": "main.js",
+      "componentTagName": "funh-new-urcap-my-bar",
+      "behaviorURI": "my-bar.worker.js",
+      "translationPath": "assets/i18n/"
+    }],
+  "operatorScreens": [ 
+    {
+      "translationPath": "assets/i18n/",
+      "behaviorURI": "my-os.worker.js",
+      "presenterURI": "main.js",
+      "componentTagName": "funh-new-urcap-my-os"
+    }]
+}
