@@ -2,7 +2,7 @@
 @if(contributedNode) {
     <div class="inline-component">
         <ur-dialog-number-input
-            [clearable]="true"
+            [clearable]="false"
             [disabled]="false"
             label="Tell me Wait Time"
             keyboardLayout="numeric-free-positive"
@@ -12,6 +12,7 @@
             placeholder= "1.1"
             [required]="false"
             [suffix]="'s'"
+            [validators]="[maxDecimalValidator]"
             (valueChanged)="this.contributedNode.parameters.waitTime = $event; this.saveNode()"
             [value]="this.contributedNode.parameters.waitTime"
         ></ur-dialog-number-input>

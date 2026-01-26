@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { ProgramPresenter, ProgramPresenterAPI, RobotSettings } from '@universal-robots/contribution-api';
 import { MyPgNode } from './my-pg.node';
@@ -46,6 +47,23 @@ export class MyPgComponent implements OnChanges, ProgramPresenter {
                     this.cd.detectChanges();
                 });
         }
+    }
+
+    // Custom validator: limit decimal places to 2
+    maxDecimalValidator = (control: AbstractControl) => {
+        const value = control.value;
+        if (value == null || value === '') {
+            return null; // No validation error if empty
+        }
+        
+        const strValue = String(value);
+        const decimalPart = strValue.split('.')[1];
+        
+        if (decimalPart && decimalPart.length > 2) {
+            return { maxDecimal: 'Maximum 2 decimal places allowed' };
+        }
+        
+        return null;
     }
 
     // Custom validator: check if input text meets requirements
