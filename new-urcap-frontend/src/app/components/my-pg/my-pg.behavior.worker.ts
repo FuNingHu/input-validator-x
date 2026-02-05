@@ -1,16 +1,22 @@
 /// <reference lib="webworker" />
 import {
     AdvancedTranslatedProgramLabel,
+    FunctionService,
     InsertionContext,
     OptionalPromise,
+    ProgramBehaviorAPI,
     ProgramBehaviors,
     ProgramNode,
     registerProgramBehavior,
     ScriptBuilder,
     ValidationContext,
-    ValidationResponse
+    ValidationResponse,
+    VariableDeclaration
 } from '@universal-robots/contribution-api';
 import { MyPgNode } from './my-pg.node';
+import { async } from 'rxjs';
+
+
 
 // programNodeLabel is required
 const createProgramNodeLabel = (node: MyPgNode): AdvancedTranslatedProgramLabel => {
@@ -23,27 +29,43 @@ const createProgramNodeLabel = (node: MyPgNode): AdvancedTranslatedProgramLabel 
             type: 'secondary',
             translationKey: 'program-node-labels.my-pg.subTitle',
             interpolateParams: { dynamicValue: 'some dynamic value' },
-        },
+        }
     ];
 };
 
 // factory is required
-const createProgramNode = (): OptionalPromise<MyPgNode> => ({
-    type: 'funh-new-urcap-my-pg',
-    version: '1.0.0',
-    lockChildren: false,
-    allowsChildren: false,
-    parameters: {
-        waitTime: 2.5,
-        header: 'Header',
-    },
-});
+const createProgramNode = async (): Promise<MyPgNode> => {
+    // 直接创建 VariableDeclaration 对象
+    const counterName = createVariable('myVar');
+
+    return {
+        type: 'funh-new-urcap-my-pg',
+        version: '1.0.0',
+        lockChildren: false,
+        allowsChildren: false,
+        parameters: {
+            waitTime: 2.5,
+            header: 'Header',
+            variable: await counterName,
+        },
+    };
+};
+
+
+async function createVariable(suggestedName: string): Promise<VariableDeclaration>{
+    const variableDeclaration = new ProgramBehaviorAPI(self).variableService.createVariable(suggestedName, 'boolean');
+    return variableDeclaration;
+};
 
 // generateCodeBeforeChildren is optional
 const generateScriptCodeBefore = (node: MyPgNode): OptionalPromise<ScriptBuilder> => new ScriptBuilder();
 
 // generateCodeAfterChildren is optional
-const generateScriptCodeAfter = (node: MyPgNode): OptionalPromise<ScriptBuilder> => new ScriptBuilder();
+const generateScriptCodeAfter = (node: MyPgNode): OptionalPromise<ScriptBuilder> => {
+    const builder = new ScriptBuilder();
+    builder.globalVariable(node.parameters.variable.name, 'False');
+    return builder;
+};
 
 // generateCodePreamble is optional
 const generatePreambleScriptCode = (node: MyPgNode): OptionalPromise<ScriptBuilder> => new ScriptBuilder();
@@ -60,9 +82,9 @@ const allowChildInsert = (node: ProgramNode, childType: string): OptionalPromise
 const allowedInsert = (insertionContext: InsertionContext): OptionalPromise<boolean> => true;
 
 // upgradeNode is optional
-const nodeUpgrade = (loadedNode: ProgramNode): ProgramNode => loadedNode;
+const nodeUpgrade = (loadedNode: ProgramNode): MyPgNode => loadedNode as MyPgNode;
 
-const behaviors: ProgramBehaviors = {
+const behaviors: ProgramBehaviors<MyPgNode> = {
     programNodeLabel: createProgramNodeLabel,
     factory: createProgramNode,
     generateCodeBeforeChildren: generateScriptCodeBefore,
