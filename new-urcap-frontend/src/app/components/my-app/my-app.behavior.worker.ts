@@ -10,7 +10,7 @@ import { MyAppNode } from './my-app.node';
 // factory is required
 const createApplicationNode = (): OptionalPromise<MyAppNode> => ({
     type: 'funh-new-urcap-my-app',    // type is required
-    version: '1.0.0'     // version is required
+    version: '1.0.0'   // version is required
 });
 
 // generatePreamble is optional
